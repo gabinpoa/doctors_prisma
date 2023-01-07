@@ -16,7 +16,17 @@ model User {
   name String
   password String
   institution String
-  is_super_user Boolean @default(false)
+  profile String
+  surgeries Surgery[]
+}
 
-  @@map("users")
+model Surgery {
+  id String @id @default(uuid())
+  institution String
+  members User[]
+  start_date DateTime @default(now())
+  label String?
+  room String
+  patient_name String
+  patient_health_plan String
 }

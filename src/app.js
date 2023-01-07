@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv from "dotenv";
 import { AppError } from "./errors/appError.js";
 import { routes } from "./routes/user.routes.js";
 
@@ -15,6 +16,7 @@ app.use((err, req, res) => {
       message: err.message,
     });
   }
+  console.error(err);
   return res.status(500).json({
     status: "error",
     message: "Internal server error",

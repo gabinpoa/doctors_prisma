@@ -7,7 +7,7 @@ export const createUserService = async ({
   email,
   password,
   institution,
-  is_super_user,
+  profile,
 }) => {
   const userWithTheSameEmail = await prisma.user.findUnique({
     where: {
@@ -24,7 +24,14 @@ export const createUserService = async ({
         email,
         password: hashedPassword,
         institution,
-        is_super_user,
+        profile,
+      },
+      select: {
+        name: true,
+        email: true,
+        institution: true,
+        profile: true,
+        id: true,
       },
     });
     return user;

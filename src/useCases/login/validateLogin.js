@@ -9,7 +9,6 @@ export const validateLogin = (schema) => async (req, res, next) => {
   try {
     const data = req.body;
     await schema.validate(data);
-
     next();
   } catch (err) {
     return res.status(400).json({ error: err.errors.join(", ") });
