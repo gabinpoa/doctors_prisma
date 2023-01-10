@@ -7,6 +7,6 @@ export const loginController = async (req, res) => {
     const token = await loginService({ email, password });
     return res.status(200).json({ token: token });
   } catch (err) {
-    return res.status(err.status).json({ message: err.message });
+    return res.status(err.status || 500).json({ message: err.message } || err);
   }
 };

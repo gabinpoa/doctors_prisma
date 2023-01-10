@@ -7,6 +7,6 @@ export const readSurgeriesController = async (req, res) => {
     const surgeries = await readSurgeriesService(token);
     res.status(200).json({ surgeries: surgeries });
   } catch (err) {
-    return res.status(err.status && err.status).json({ message: err.message });
+    return res.status(err.status || 500).json({ message: err.message } || err);
   }
 };

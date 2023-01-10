@@ -2,22 +2,27 @@ import { prisma } from "../../prisma/client.js";
 import jwt from "jsonwebtoken";
 
 export const readAllUsersService = async (token) => {
-  const decodedReaderEmail = jwt.decode(token, process.env.TOKEN_SECRET).email;
+  try {
+    const decodedReaderEmail = jwt.decode(token, process.env.TOKEN_SECRET).email;
+  
+    const readerUser = await prisma.user.findUnique({
+      where: {
+        email: decodedReaderEmail,
+      },
+      select: {
+        institution: true,
+      },
+    });
+  
+    const users = await prisma.user.findMany({
+      where: {
+        institution: readerUser.institution,
+      },
+    });
+  
+    return users;
 
-  const readerUser = await prisma.user.findUnique({
-    where: {
-      email: decodedReaderEmail,
-    },
-    select: {
-      institution: true,
-    },
-  });
-
-  const users = await prisma.user.findMany({
-    where: {
-      institution: readerUser.institution,
-    },
-  });
-
-  return users;
+  } catch (err) {
+    throw new Error(err)
+  }
 };

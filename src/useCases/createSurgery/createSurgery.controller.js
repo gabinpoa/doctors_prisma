@@ -24,6 +24,6 @@ export const createSurgeryController = async (req, res) => {
 
     return res.status(201).json(newSurgery);
   } catch (err) {
-    return res.status(err.status).json({ message: err.message });
+    return res.status(err.status || 500).json({ message: err.message } || err);
   }
 };

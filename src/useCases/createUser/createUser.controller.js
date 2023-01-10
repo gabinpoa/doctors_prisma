@@ -14,6 +14,6 @@ export const createUserController = async (req, res) => {
 
     return res.status(200).json(newUser);
   } catch (err) {
-    return res.status(err.status).json({ message: err.message });
+    return res.status(err.status || 500).json({ message: err.message } || err);
   }
 };
