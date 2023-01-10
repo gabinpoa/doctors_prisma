@@ -1,21 +1,22 @@
-import { AppError } from "../../errors/appError.js";
 import { prisma } from "../../prisma/client.js";
 import * as bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-export const createUserService = async ({
-  name,
-  email,
-  password,
-  institution,
-  profile,
-}) => {
+export const createUserService = async ({ name, email, password, profile }) => {
+  const decodedCreatorEmail = jwt.decode(email, process.env.TOKEN_SECRET).email;
+
+  const creator = await prisma.user.findUnique({
+    where: { email: decodedCreatorEmail },
+    select: { institution: true },
+  });
+
   const userWithTheSameEmail = await prisma.user.findUnique({
     where: {
       email: email,
     },
   });
   if (userWithTheSameEmail) {
-    throw new AppError(400, "E-mail já existe");
+    throw { status: 400, message: "User already exists." };
   } else {
     const hashedPassword = bcrypt.hashSync(password, 10);
     const user = await prisma.user.create({
@@ -23,7 +24,7 @@ export const createUserService = async ({
         name,
         email,
         password: hashedPassword,
-        institution,
+        institution: creator.institution,
         profile,
       },
       select: {

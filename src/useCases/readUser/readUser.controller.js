@@ -1,4 +1,3 @@
-import { AppError, handleError } from "../../errors/appError.js";
 import { readUserService } from "./readUser.service.js";
 
 export const readUserController = async (req, res) => {
@@ -7,10 +6,8 @@ export const readUserController = async (req, res) => {
 
     const user = await readUserService(token);
 
-    return res.status(200).json({ user: user });
+    return res.status(200).json(user);
   } catch (err) {
-    if (err instanceof AppError) {
-      handleError(err, res);
-    }
+    return res.status(err.status).json({ message: err.message });
   }
 };

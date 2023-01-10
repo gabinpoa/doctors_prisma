@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken";
-import { AppError } from "../errors/appError.js";
-import dotenv from "dotenv";
 
 export const validateToken = (req, res, next) => {
   try {
@@ -10,6 +8,6 @@ export const validateToken = (req, res, next) => {
 
     next();
   } catch (err) {
-    throw new AppError(401, "Invalid ");
+    return res.status(err.status).json({ message: err.message });
   }
 };

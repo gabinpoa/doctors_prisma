@@ -1,4 +1,3 @@
-import { AppError, handleError } from "../errors/appError.js";
 import { prisma } from "../prisma/client.js";
 import jwt from "jsonwebtoken";
 
@@ -20,11 +19,9 @@ export const validateIsCreatorOrAbove = async (req, res, next) => {
     if (userProfile.profile === "admin" || userProfile.profile === "creator") {
       next();
     } else {
-      throw new AppError(401, "User cannot perform this action");
+      throw { status: 401, message: "User cannot perform this action" };
     }
   } catch (err) {
-    if (err instanceof AppError) {
-      handleError(err, res);
-    }
+    return res.status(err.status).json({ message: err.message });
   }
 };

@@ -1,20 +1,19 @@
-import { AppError } from "../../errors/appError.js";
 import { createSurgeryService } from "./createSurgery.service.js";
 
 export const createSurgeryController = async (req, res) => {
   try {
     const {
-      institution,
       label = undefined,
       start_date,
       room,
       patient_name,
       patient_health_plan,
+      membersIds,
     } = req.body;
-    let { membersIds } = req.body;
+    const token = req.headers.authorization.split("Bearer ")[1];
 
     const newSurgery = await createSurgeryService({
-      institution,
+      token,
       label,
       start_date,
       room,
@@ -23,10 +22,8 @@ export const createSurgeryController = async (req, res) => {
       membersIds,
     });
 
-    return res.status(201).json({ surgery: newSurgery });
+    return res.status(201).json(newSurgery);
   } catch (err) {
-    if (err instanceof AppError) {
-      handleError(err, res);
-    }
+    return res.status(err.status).json({ message: err.message });
   }
 };
