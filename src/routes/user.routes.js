@@ -27,7 +27,12 @@ import { validateToken } from "../utils/validateToken.js";
 export const routes = Router();
 
 routes.get("/user", validateToken, readUserController);
-routes.get("/users", validateToken, validateIsAdmin, readAllUsersController);
+routes.get(
+  "/users",
+  validateToken,
+  validateIsCreatorOrAbove,
+  readAllUsersController
+);
 routes.post(
   "/user",
   validateToken,
