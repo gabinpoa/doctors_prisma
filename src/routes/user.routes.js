@@ -1,4 +1,9 @@
 import { Router } from "express";
+import { addYourselfController } from "../useCases/addYourself/addYourself.controller.js";
+import {
+  addYourselfSchema,
+  validateAddYourself,
+} from "../useCases/addYourself/validateAddYourself.js";
 import { createSurgeryController } from "../useCases/createSurgery/createSurgery.controller.js";
 import {
   createSurgerySchema,
@@ -56,6 +61,12 @@ routes.put(
   validateIsCreatorOrAbove,
   validateUpdateSurgery(updateSurgerySchema),
   updateSurgeryController
+);
+routes.patch(
+  "/surgery/:id",
+  validateToken,
+  validateAddYourself(addYourselfSchema),
+  addYourselfController
 );
 routes.delete(
   "/surgery/:id",
