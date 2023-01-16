@@ -7,7 +7,7 @@ export const createSurgeryController = async (req, res) => {
       start_date,
       room,
       patient_name,
-      patient_health_plan,
+      patient_health_plan = undefined,
       membersIds,
     } = req.body;
     const token = req.headers.authorization.split("Bearer ")[1];

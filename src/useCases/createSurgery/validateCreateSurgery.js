@@ -1,11 +1,11 @@
 import * as yup from "yup";
 
 export const createSurgerySchema = yup.object().shape({
-  label: yup.string(),
+  label: yup.string().notRequired(),
   start_date: yup.date().required(),
   room: yup.string().required(),
   patient_name: yup.string().required(),
-  patient_health_plan: yup.string(),
+  patient_health_plan: yup.string().notRequired(),
   membersIds: yup.array().required(),
 });
 

@@ -8,7 +8,7 @@ export const createSurgeryService = async ({
   start_date,
   room,
   patient_name,
-  patient_health_plan,
+  patient_health_plan = null,
 }) => {
   try {
     const decodedEmail = jwt.decode(token, process.env.TOKEN_SECRET).email;
@@ -41,6 +41,6 @@ export const createSurgeryService = async ({
     });
     return newSurgery;
   } catch (err) {
-    throw new Error(err)
+    throw new Error(err);
   }
 };
