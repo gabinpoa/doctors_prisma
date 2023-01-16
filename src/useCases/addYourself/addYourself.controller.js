@@ -1,4 +1,4 @@
-import { addYourselfService } from "./addYourself.service";
+import { addYourselfService } from "./addYourself.service.js";
 
 export const addYourselfController = async (req, res) => {
   try {
