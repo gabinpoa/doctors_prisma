@@ -9,6 +9,9 @@ export const homeService = async (token) => {
       where: {
         email: decodedEmail,
       },
+      include: {
+        surgeries: true,
+      },
     });
 
     const timeNow = Date.now();
