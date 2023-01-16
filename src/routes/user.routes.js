@@ -10,10 +10,10 @@ import {
   validateCreateUser,
 } from "../useCases/createUser/validateCreateUser.js";
 import { deleteSurgeryController } from "../useCases/deleteSurgery/deleteSurgery.controller.js";
+import { homeController } from "../useCases/home/home.controller.js";
 import { loginController } from "../useCases/login/login.controller.js";
 import { loginSchema, validateLogin } from "../useCases/login/validateLogin.js";
 import { readAllUsersController } from "../useCases/readAllUsers/readAllUsers.controller.js";
-import { readSurgeriesController } from "../useCases/readSurgeries/readSurgeries.controller.js";
 import { readUserController } from "../useCases/readUser/readUser.controller.js";
 import { updateSurgeryController } from "../useCases/updateSurgery/updateSurgery.controller.js";
 import {
@@ -49,7 +49,7 @@ routes.post(
   validateCreateSurgery(createSurgerySchema),
   createSurgeryController
 );
-routes.get("/surgeries", validateToken, readSurgeriesController);
+routes.get("/home", validateToken, homeController);
 routes.put(
   "/surgery/:id",
   validateToken,

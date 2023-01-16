@@ -1,17 +1,13 @@
 import { prisma } from "../../prisma/client.js";
 import jwt from "jsonwebtoken";
 
-export const readSurgeriesService = async (token) => {
+export const homeService = async (token) => {
   try {
     const decodedEmail = jwt.decode(token, process.env.TOKEN_SECRET).email;
 
     const user = await prisma.user.findUnique({
       where: {
         email: decodedEmail,
-      },
-      select: {
-        institution: true,
-        profile: true,
       },
     });
 
@@ -34,9 +30,8 @@ export const readSurgeriesService = async (token) => {
     });
 
     return {
-      institution: user.institution,
       surgeries: surgeries,
-      profile: user.profile,
+      user: user,
     };
   } catch (err) {
     throw new Error(err);
