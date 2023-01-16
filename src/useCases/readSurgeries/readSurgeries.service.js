@@ -11,6 +11,7 @@ export const readSurgeriesService = async (token) => {
       },
       select: {
         institution: true,
+        profile: true,
       },
     });
 
@@ -32,7 +33,11 @@ export const readSurgeriesService = async (token) => {
       },
     });
 
-    return { institution: user.institution, surgeries: surgeries };
+    return {
+      institution: user.institution,
+      surgeries: surgeries,
+      profile: user.profile,
+    };
   } catch (err) {
     throw new Error(err);
   }
