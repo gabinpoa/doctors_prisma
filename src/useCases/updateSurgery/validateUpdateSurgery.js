@@ -6,8 +6,8 @@ export const updateSurgerySchema = yup.object().shape({
   room: yup.string().required(),
   patient_name: yup.string().required(),
   patient_health_plan: yup.string().notRequired(),
-  membersIdsToAdd: yup.array().required(),
-  membersIdsToRemove: yup.array().required(),
+  membersIdsToAdd: yup.array().notRequired(),
+  membersIdsToRemove: yup.array().notRequired(),
 });
 
 export const validateUpdateSurgery = (schema) => async (req, res, next) => {

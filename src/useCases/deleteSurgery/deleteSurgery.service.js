@@ -17,7 +17,10 @@ export const deleteSurgeryService = async ({ token, surgeryId }) => {
         members: true,
       },
     });
-    if (deletorUser.profile === "admin") {
+    if (
+      deletorUser.profile === "admin" ||
+      surgeryToDelete.created_by === deletorUserEmail
+    ) {
       const deletedSurgery = await prisma.surgery.delete({
         where: {
           id: surgeryId,
@@ -27,8 +30,7 @@ export const deleteSurgeryService = async ({ token, surgeryId }) => {
     } else {
       throw { status: 401, message: "User cannot delete this surgery." };
     }
-
   } catch (err) {
-    throw new Error(err)
+    throw new Error(err);
   }
 };

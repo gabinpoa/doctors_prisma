@@ -23,10 +23,11 @@ model User {
 model Surgery {
   id String @id @default(uuid())
   institution String
-  members User[]
+  members User[] @relation()
   start_date DateTime @default(now())
   label String?
   room String
   patient_name String
   patient_health_plan String?
+  created_by String?
 }

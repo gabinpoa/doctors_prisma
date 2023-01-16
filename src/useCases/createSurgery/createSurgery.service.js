@@ -24,6 +24,7 @@ export const createSurgeryService = async ({
       },
       select: {
         institution: true,
+        id: true,
       },
     });
     const newSurgery = await prisma.surgery.create({
@@ -37,6 +38,7 @@ export const createSurgeryService = async ({
         members: {
           connect: newMembers,
         },
+        created_by: decodedEmail,
       },
     });
     return newSurgery;

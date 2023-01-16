@@ -4,8 +4,13 @@ export const updateSurgeryController = async (req, res) => {
   try {
     const surgeryId = req.params.id;
     const body = req.body;
+    const token = req.headers.authorization.split(" ")[1];
 
-    const updatedSurgery = await updateSurgeryService({ surgeryId, body });
+    const updatedSurgery = await updateSurgeryService({
+      surgeryId,
+      body,
+      token,
+    });
     if (!updatedSurgery) {
       throw { status: 404, message: "Surgery not found" };
     }
