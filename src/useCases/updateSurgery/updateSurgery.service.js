@@ -15,7 +15,6 @@ export const updateSurgeryService = async ({ body, surgeryId, token }) => {
     });
 
     if (surgeryToUpdate.created_by === decodedEmail) {
-      console.log("hi");
       const membersIdsToAdd =
         (body.membersIdsToAdd &&
           body.membersIdsToAdd.map((id) => {
