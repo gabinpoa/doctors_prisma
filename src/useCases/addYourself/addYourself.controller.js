@@ -2,7 +2,7 @@ import { addYourselfService } from "./addYourself.service.js";
 
 export const addYourselfController = async (req, res) => {
   try {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const { user_id } = req.body;
 
     const updatedSurgery = await addYourselfService({
