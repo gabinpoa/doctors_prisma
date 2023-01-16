@@ -18,7 +18,7 @@ export const readSurgeriesService = async (token) => {
     const thirtyMinutesAgoToIsoString = new Date(timeNow - 60000 * 30);
 
     const surgeries = await prisma.surgery.findMany({
-      sortBy: {
+      orderBy: {
         start_date: "asc",
       },
       where: {
