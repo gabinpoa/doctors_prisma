@@ -3,13 +3,20 @@ import { createUserService } from "./createUser.service.js";
 export const createUserController = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
-    const { password, name, email, institution, profile } = req.body;
+    const {
+      password,
+      name,
+      email,
+      institution = undefined,
+      profile,
+    } = req.body;
     const newUser = await createUserService({
       name,
       email,
       password,
       profile,
       token,
+      institution,
     });
 
     return res.status(200).json(newUser);

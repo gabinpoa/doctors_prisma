@@ -27,10 +27,22 @@ export const createSurgeryService = async ({
         id: true,
       },
     });
+
+    const formatedPatientName = patient_name
+      .trim()
+      .split(" ")
+      .map((item) => item[0].toUpperCase() + item.slice(1))
+      .join(" ");
+    const formatedHealthPlan = patient_health_plan
+      .trim()
+      .split(" ")
+      .map((item) => item[0].toUpperCase() + item.slice(1))
+      .join(" ");
+
     const newSurgery = await prisma.surgery.create({
       data: {
-        patient_name: patient_name,
-        patient_health_plan: patient_health_plan,
+        patient_name: formatedPatientName,
+        patient_health_plan: formatedHealthPlan,
         room: room,
         start_date: toIsoStartDate,
         label: label,

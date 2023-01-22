@@ -27,14 +27,23 @@ export const updateSurgeryService = async ({ body, surgeryId, token }) => {
             return { id: id };
           })) ||
         null;
-
+      const formatedPatientName = body.patient_name
+        .trim()
+        .split(" ")
+        .map((item) => item[0].toUpperCase() + item.slice(1))
+        .join(" ");
+      const formatedHealthPlan =
+        body.patient_health_plan
+          .trim()
+          .split(" ")
+          .map((item) => item[0].toUpperCase() + item.slice(1))
+          .join(" ") || null;
       const newSurgerysData = {
-        label: body.label || null,
+        label: body.label.trim() || null,
         start_time: body.start_time,
-        patient_name: body.patient_name,
-        patient_health_plan: body.patient_health_plan || null,
-        room: body.room,
-        institution: body.institution,
+        patient_name: formatedPatientName,
+        patient_health_plan: formatedHealthPlan || null,
+        room: body.room.trim(),
         members: {
           connect: membersIdsToAdd || [],
           disconnect: membersIdsToRemove || [],
