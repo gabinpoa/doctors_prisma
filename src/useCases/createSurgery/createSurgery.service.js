@@ -24,7 +24,6 @@ export const createSurgeryService = async ({
       },
       select: {
         institution: true,
-        id: true,
       },
     });
 
@@ -33,11 +32,15 @@ export const createSurgeryService = async ({
       .split(" ")
       .map((item) => item[0].toUpperCase() + item.slice(1))
       .join(" ");
-    const formatedHealthPlan = patient_health_plan
-      .trim()
-      .split(" ")
-      .map((item) => item[0].toUpperCase() + item.slice(1))
-      .join(" ");
+    const formatedHealthPlan =
+      (patient_health_plan &&
+        patient_health_plan
+          .trim()
+          .split(" ")
+          .map((item) => item[0].toUpperCase() + item.slice(1))
+          .join(" ")) ||
+      null;
+    const formatedLabel = (label && label.trim()) || null;
 
     const newSurgery = await prisma.surgery.create({
       data: {
@@ -45,7 +48,7 @@ export const createSurgeryService = async ({
         patient_health_plan: formatedHealthPlan,
         room: room,
         start_date: toIsoStartDate,
-        label: label,
+        label: formatedLabel,
         institution: creatorUser.institution,
         members: {
           connect: newMembers,

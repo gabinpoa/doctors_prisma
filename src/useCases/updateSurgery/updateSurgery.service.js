@@ -33,16 +33,19 @@ export const updateSurgeryService = async ({ body, surgeryId, token }) => {
         .map((item) => item[0].toUpperCase() + item.slice(1))
         .join(" ");
       const formatedHealthPlan =
-        body.patient_health_plan
-          .trim()
-          .split(" ")
-          .map((item) => item[0].toUpperCase() + item.slice(1))
-          .join(" ") || null;
+        (body.patient_health_plan &&
+          body.patient_health_plan
+            .trim()
+            .split(" ")
+            .map((item) => item[0].toUpperCase() + item.slice(1))
+            .join(" ")) ||
+        null;
+      const formatedLabel = (body.label && body.label.trim()) || null;
       const newSurgerysData = {
-        label: body.label.trim() || null,
+        label: formatedLabel,
         start_time: body.start_time,
         patient_name: formatedPatientName,
-        patient_health_plan: formatedHealthPlan || null,
+        patient_health_plan: formatedHealthPlan,
         room: body.room.trim(),
         members: {
           connect: membersIdsToAdd || [],
