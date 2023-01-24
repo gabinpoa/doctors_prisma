@@ -1,12 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
 import { routes } from "./routes/user.routes.js";
+import cors from "cors";
 
 const app = express();
 
 app.use(express.json());
 
 app.use(routes);
+
+app.use(cors);
 
 app.use((err, req, res, next) => {
   if (!err.status) {
