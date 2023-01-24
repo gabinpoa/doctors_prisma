@@ -25,7 +25,6 @@ import {
   updateSurgerySchema,
   validateUpdateSurgery,
 } from "../useCases/updateSurgery/validateUpdateSurgery.js";
-import { corsMiddleware } from "../utils/cors.js";
 import { validateIsAdmin } from "../utils/validateIsAdmin.js";
 import { validateIsCreatorOrAbove } from "../utils/validateIsCreatorOrAbove.js";
 import { validateToken } from "../utils/validateToken.js";
@@ -46,12 +45,7 @@ routes.post(
   validateCreateUser(createUserSchema),
   createUserController
 );
-routes.post(
-  "/login",
-  corsMiddleware,
-  validateLogin(loginSchema),
-  loginController
-);
+routes.post("/login", validateLogin(loginSchema), loginController);
 
 routes.post(
   "/surgery",

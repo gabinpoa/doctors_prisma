@@ -7,9 +7,18 @@ const app = express();
 
 app.use(express.json());
 
-app.use(routes);
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
-app.use(cors);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
+
+app.use(routes);
 
 app.use((err, req, res, next) => {
   if (!err.status) {
